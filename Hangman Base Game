@@ -1,0 +1,92 @@
+import random
+words = [
+    "about", "account", "acid", "across", "blueberry", "between", "bitter", "board", 
+    "burst", "cake", "camera", "canvas", "cheese", "comb", "camel", "damage", "danger", 
+    "detail", "different", "engine", "event", "face", "family", "feather", "fiction", 
+    "force", "forward", "garden", "great", "growth", "hammer", "heart", "horse", "house", 
+    "insect", "interest", "knot", "laugh", "learn", "level", "limit", "maker", "market", 
+    "medic", "meet", "minute", "motion", "north", "nerve", "order", "orange", "owner", 
+    "paste", "paper", "payment", "power", "price", "quick", "quiet", "range", "ready", 
+    "record", "regular", "respect", "route", "smile", "science", "sense", "shake", "shirt", 
+    "stamp", "steam", "steel", "sugar", "sweet", "system", "support", "summer", "sudden", 
+    "teach", "table", "taste", "theory", "thing", "thread", "tired", "trade", "trick", "tight", 
+    "verse", "vote", "walk", "water", "watch", "waste", "which", "yellow", "young", "zebra"
+]
+def get_word():
+    selected_word = random.choice(words)
+    return selected_word
+   
+def yesorno():
+    user_input = input('Would you like to play again?\nType Y to play again, or type N to stop\n')
+    if user_input == 'Y':
+        print('Good Luck!')            
+        HM()
+    elif user_input == 'y':
+        print('Good Luck!')            
+        HM()
+    elif user_input == 'N':
+        print('Thanks for playing!')
+        n = 0
+        output = ''
+    elif user_input == 'n':
+        print('Thanks for playing!')
+        n = 0
+        output = ''
+    else:
+        print('Please press Y or N')
+        yesorno()
+def HM():
+    selected_word = get_word()
+    finalword = selected_word
+    previous_guesses = []
+    output = '-' * len(selected_word)
+    n = int(input('Please select difficulty:\nType 10 for easy, 7 for medium, and 5 for hard.\n'))
+    while n > 0:
+        if '-' in output:
+            letter = input('Enter your guess!\n')
+            if letter in previous_guesses:
+                print('You already guessed that!')
+            else:
+                if selected_word.count(letter) == 1:
+                    previous_guesses.append(letter)
+                    index1 = selected_word.index(letter)
+                    output = list(output)
+                    output[index1] = letter
+                    output = ''.join(output)
+                    print('Correct!')
+                    print(output)
+                    print(f'Guesses remaining: {n}')
+                elif selected_word.count(letter) > 1:
+                    previous_guesses.append(letter)
+                    x = int(selected_word.count(letter))
+                
+                    while x > 0:
+                        index1 = selected_word.index(letter)
+                        output = list(output)
+                        output[index1] = letter
+                        selected_word = list(selected_word)
+                        selected_word[index1] = '.'
+                        selected_word = ''.join(selected_word)
+                        output = ''.join(output)
+                        x -= 1
+                    print('Correct!')
+                    print(output)
+                    print(f'Guesses remaining: {n}')
+                else:
+                    previous_guesses.append(letter)
+                    n -= 1
+                    print('Incorrect')
+                    print(output)
+                    print(f'Guesses remaining: {n}')
+        else:
+            print('\nCongratulation!!! You won!')
+            yesorno()
+    else:
+        print('\nSorry! You lost:(')
+        print(f'The word was: {finalword}')
+        yesorno()
+print('Hi! Welcome to Hangman.\nPress enter to continue!')
+user_key = input()
+if user_key == '':
+    print('You will have limited attempts to guess the randomly selected word.\nHave fun!')
+    HM()
